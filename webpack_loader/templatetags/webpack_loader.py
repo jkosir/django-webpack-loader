@@ -1,6 +1,7 @@
 from django import template
 from django.conf import settings
 from django.utils.safestring import mark_safe
+from django.contrib.staticfiles.templatetags.staticfiles import static
 
 from ..utils import get_loader
 
@@ -20,11 +21,11 @@ def render_as_tags(bundle):
         if chunk['name'].endswith('.js'):
             tags.append((
                 '<script type="text/javascript" src="{0}"></script>'
-            ).format(chunk['url']))
+            ).format(static(chunk['name'])))
         elif chunk['name'].endswith('.css'):
             tags.append((
                 '<link type="text/css" href="{0}" rel="stylesheet"/>'
-            ).format(chunk['url']))
+            ).format(static(chunk['name'])))
     return mark_safe('\n'.join(tags))
 
 
